@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* DAO Governance Color Palette */
+    --background: 230 35% 7%;
+    --foreground: 220 15% 95%;
+
+    --card: 230 35% 9%;
+    --card-foreground: 220 15% 95%;
+
+    --popover: 230 35% 9%;
+    --popover-foreground: 220 15% 95%;
+
+    /* AI Purple-Blue Gradient Theme */
+    --primary: 255 65% 65%;
+    --primary-foreground: 230 35% 7%;
+    --primary-glow: 280 75% 75%;
+
+    --secondary: 240 25% 15%;
+    --secondary-foreground: 220 15% 95%;
+
+    --muted: 230 20% 12%;
+    --muted-foreground: 220 15% 65%;
+
+    --accent: 260 70% 60%;
+    --accent-foreground: 230 35% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 145 65% 55%;
+    --success-foreground: 230 35% 7%;
+
+    --warning: 45 95% 60%;
+    --warning-foreground: 230 35% 7%;
+
+    --border: 230 20% 18%;
+    --input: 230 20% 18%;
+    --ring: 255 65% 65%;
+
+    --radius: 0.75rem;
+
+    /* Custom Governance Tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(255 65% 65%), hsl(280 75% 75%));
+    --gradient-secondary: linear-gradient(135deg, hsl(240 25% 15%), hsl(230 20% 12%));
+    --gradient-accent: linear-gradient(135deg, hsl(260 70% 60%), hsl(255 65% 65%));
+    
+    --shadow-glow: 0 0 40px hsl(255 65% 65% / 0.3);
+    --shadow-elevated: 0 20px 40px -10px hsl(230 35% 7% / 0.4);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Glass Effect */
+    --glass-bg: hsl(230 35% 9% / 0.7);
+    --glass-border: hsl(220 15% 95% / 0.1);
+
+    --sidebar-background: 230 35% 8%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 255 65% 65%;
+    --sidebar-primary-foreground: 230 35% 7%;
+    --sidebar-accent: 240 25% 15%;
+    --sidebar-accent-foreground: 220 15% 95%;
+    --sidebar-border: 230 20% 18%;
+    --sidebar-ring: 255 65% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
