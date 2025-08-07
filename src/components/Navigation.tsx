@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/enhanced-button";
 import { WalletConnect } from "./WalletConnect";
 import { 
@@ -8,7 +9,8 @@ import {
   Settings, 
   Zap,
   Menu,
-  X
+  X,
+  Building
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,12 +21,14 @@ interface NavigationProps {
 
 export const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-    { id: 'proposals', label: 'Proposals', icon: Vote },
-    { id: 'create', label: 'Create', icon: Plus },
-    { id: 'ai-insights', label: 'AI Insights', icon: Zap },
+    { id: 'dashboard', label: 'Dashboard', icon: BarChart3, path: '/', isTab: true },
+    { id: 'proposals', label: 'Proposals', icon: Vote, path: '/', isTab: true },
+    { id: 'create-dao', label: 'Create DAO', icon: Plus, path: '/create-dao', isTab: false },
+    { id: 'my-daos', label: 'My DAOs', icon: Building, path: '/my-daos', isTab: false },
+    { id: 'ai-insights', label: 'AI Insights', icon: Zap, path: '/', isTab: true },
   ];
 
   return (
@@ -45,18 +49,37 @@ export const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
           <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => {
               const Icon = item.icon;
-              return (
-                <Button
-                  key={item.id}
-                  variant={activeTab === item.id ? "ai" : "ghost"}
-                  size="sm"
-                  onClick={() => setActiveTab?.(item.id)}
-                  className="flex items-center gap-2"
-                >
-                  <Icon className="w-4 h-4" />
-                  {item.label}
-                </Button>
-              );
+              const isActive = item.isTab 
+                ? activeTab === item.id 
+                : location.pathname === item.path;
+              
+              if (item.isTab) {
+                return (
+                  <Button
+                    key={item.id}
+                    variant={isActive ? "ai" : "ghost"}
+                    size="sm"
+                    onClick={() => setActiveTab?.(item.id)}
+                    className="flex items-center gap-2"
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.label}
+                  </Button>
+                );
+              } else {
+                return (
+                  <Link key={item.id} to={item.path}>
+                    <Button
+                      variant={isActive ? "ai" : "ghost"}
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <Icon className="w-4 h-4" />
+                      {item.label}
+                    </Button>
+                  </Link>
+                );
+              }
             })}
           </div>
 
@@ -82,21 +105,41 @@ export const Navigation = ({ activeTab, setActiveTab }: NavigationProps) => {
             <div className="flex flex-col gap-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                return (
-                  <Button
-                    key={item.id}
-                    variant={activeTab === item.id ? "ai" : "ghost"}
-                    size="sm"
-                    onClick={() => {
-                      setActiveTab?.(item.id);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="flex items-center gap-2 justify-start w-full"
-                  >
-                    <Icon className="w-4 h-4" />
-                    {item.label}
-                  </Button>
-                );
+                const isActive = item.isTab 
+                  ? activeTab === item.id 
+                  : location.pathname === item.path;
+                
+                if (item.isTab) {
+                  return (
+                    <Button
+                      key={item.id}
+                      variant={isActive ? "ai" : "ghost"}
+                      size="sm"
+                      onClick={() => {
+                        setActiveTab?.(item.id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2 justify-start w-full"
+                    >
+                      <Icon className="w-4 h-4" />
+                      {item.label}
+                    </Button>
+                  );
+                } else {
+                  return (
+                    <Link key={item.id} to={item.path}>
+                      <Button
+                        variant={isActive ? "ai" : "ghost"}
+                        size="sm"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-2 justify-start w-full"
+                      >
+                        <Icon className="w-4 h-4" />
+                        {item.label}
+                      </Button>
+                    </Link>
+                  );
+                }
               })}
             </div>
             <div className="pt-4 border-t border-border">
